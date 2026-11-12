@@ -15,8 +15,6 @@ I ran all five variants on a Windows endpoint in my lab, monitored with the same
 - **Event ID 11 (file created):** catches a DLL being staged in a user-writable directory.
 - **Event ID 7 (image loaded):** shows a SYSTEM process executing from a non-standard directory, the outcome of task or service abuse.
 
-One note on the screenshots: I did not save captures from my own dashboard during this run, so the images below are example captures of the same alerts these techniques produced.
-
 | # | Technique | ATT&CK | Sysmon event | Wazuh rule |
 |---|---|---|---|---|
 | 1 | Unquoted service path | T1574.009 | 13 | 111010 |
@@ -39,7 +37,7 @@ I created a standard user with modify rights on C:\Tools, registered a service w
 
 Rule 111010 (level 10) detects the misconfiguration itself: a Sysmon Event ID 13 writing a service ImagePath whose value is an unquoted path containing a space. The alert names the service and the exact path, so the weakness is visible before anyone exploits it.
 
-![Example alert: unquoted service path, rule 111010](images/unquoted-service-path-alert.png)
+![](images/unquoted-service-path-alert.png)
 
 ## 2. Services registry permissions weakness (T1574.011)
 
@@ -53,7 +51,7 @@ I granted the standard user full control of a test service's key, then changed i
 
 Rule 111020 (level 12) keys on who made the change. Legitimate changes come from services.exe, the Service Control Manager. The rule alerts on a Sysmon Event ID 13 that modifies ImagePath, FailureCommand, or ServiceDll from any other process. In my run it showed PowerShell, the target value, and the user, which is the finding on its own.
 
-![Example alert: service registry value modified outside services.exe, rule 111020](images/service-registry-permissions-alert.png)
+![](images/service-registry-permissions-alert.png)
 
 ## 3. AlwaysInstallElevated through Msiexec (T1218.007)
 
@@ -68,7 +66,7 @@ I set the value in the machine hive, then in the standard user's hive:
 
 Rule 111030 (level 12) fires on the Sysmon Event ID 13 that sets either value to 1. Rule 111031 (level 14) correlates: when 111030 matches two different registry locations within 10 minutes, both halves of the policy are set and the escalation actually works. One value is a note, both values are a SYSTEM path, and the severity reflects that.
 
-![Example alert: AlwaysInstallElevated enabled, rules 111030 and 111031](images/always-install-elevated-alert.png)
+![](images/always-install-elevated-alert.png)
 
 ## 4. DLL search-order hijacking (T1574.001)
 
@@ -83,7 +81,7 @@ I compiled a loader that loads somelibrary.dll by name, then, as the standard us
 
 Rule 111040 (level 10) detects the preparation: a Sysmon Event ID 11 recording a DLL created outside the standard system and application directories. Catching the staging matters, because once a privileged application loads the DLL, the execution itself can look legitimate.
 
-![Example alert: DLL created outside standard directories, rule 111040](images/dll-hijacking-alert.png)
+![](images/dll-hijacking-alert.png)
 
 ## 5. Scheduled task binary replacement (T1053.005)
 
@@ -99,7 +97,7 @@ I created a SYSTEM task running C:\Tools\maint.exe, granted the standard user mo
 
 Rule 111050 (level 12) detects the outcome: a Sysmon Event ID 7 showing NT AUTHORITY\SYSTEM executing an image from outside the standard directories. A SYSTEM process running out of C:\Tools is almost never legitimate, and because the rule keys on the outcome, it catches the same weak-permission pattern reached through a service as well.
 
-![Example alert: SYSTEM process running from a non-standard directory, rule 111050](images/scheduled-task-system-alert.png)
+![](images/scheduled-task-system-alert.png)
 
 ## Results
 
