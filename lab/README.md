@@ -9,8 +9,8 @@ flowchart TB
     SW["TP-Link switch<br/>TAP / mirror port"]
 
     subgraph VSPHERE["VMware vSphere: two ESXi hosts"]
-        DC["Domain Controller<br/>sheikhlabs.com<br/>Windows Server 2016<br/>AD DS, DNS"]
-        DHCP["DHCP server<br/>shdhcp.sheikhlabs.com<br/>Windows Server 2016"]
+        DC["Domain Controller<br/>Windows Server 2016<br/>AD DS, DNS"]
+        DHCP["DHCP server<br/>shdhcp<br/>Windows Server 2016"]
         EP["4x Windows 11 endpoints<br/>Sysmon, Winlogbeat<br/>Wazuh and Elastic agents"]
         subgraph SEC["Linux security servers: CentOS / Red Hat"]
             SUR["Suricata<br/>IDS mode, ~30,000 rules<br/>eve.json"]
@@ -52,7 +52,7 @@ Everything runs on two VMware ESXi hosts managed through vSphere.
 
 ## Domain services
 
-The lab domain is sheikhlabs.com.
+The lab runs a single Active Directory domain.
 
 | Service | Host | OS | Placement |
 |---|---|---|---|
