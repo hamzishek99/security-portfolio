@@ -1,6 +1,6 @@
 # Hamza Sheikh
 
-SOC analyst and detection engineer with 8 years in security operations, incident response, and detection engineering. Based in the Bolingbrook, IL area. I work remote.
+SOC analyst and detection engineer with 8 years in security operations, incident response, and detection engineering. Based in Chicago, IL. I work remote.
 
 I spend most of my time on the defender side of Microsoft and Splunk environments. I triage and investigate incidents, build detection content from threat hunt findings, and tune alerts so the queue stays worth reading. I have written 50 custom Sentinel analytics from hunts and cut false positive volume by roughly 40 percent through threshold and entity tuning. I also run a home lab where I test attack paths and turn what I learn into detections.
 
