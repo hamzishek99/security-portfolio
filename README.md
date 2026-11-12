@@ -10,7 +10,7 @@ This repo is my public portfolio. Everything here is generalized or built in my 
 
 - [Sigma rules](sigma-rules/): detection rules I have written in Sigma format, with ATT&CK mapping and tuning notes.
 - [Write-ups](writeups/): investigation walkthroughs and lab exercise notes, indexed on one page. Current write-ups: [BEC session token theft investigation](writeups/bec-session-token-theft/), [Detecting SharpHound with Wazuh](writeups/sharphound-wazuh-detection/).
-- [Home lab](lab/): how my lab is built and how I use it for purple team work.
+- [Lab Setup](lab/): how my lab is built, host by host, and how the telemetry flows through it.
 
 ## Skills snapshot
 
