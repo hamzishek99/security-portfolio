@@ -56,8 +56,8 @@ The lab domain is sheikhlabs.com.
 
 | Service | Host | OS | Placement |
 |---|---|---|---|
-| Active Directory Domain Services, DNS | Domain controller, sheikhlabs.com | Windows Server 2016 | ESXi host 1 |
-| DHCP | shdhcp.sheikhlabs.com | Windows Server 2016 | ESXi host 2 |
+| Active Directory Domain Services, DNS | Domain controller | Windows Server 2016 | ESXi host 1 |
+| DHCP | shdhcp | Windows Server 2016 | ESXi host 2 |
 
 ## Endpoints
 
