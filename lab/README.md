@@ -2,6 +2,46 @@
 
 My home lab mimics a small network and security environment: a Windows domain, Linux security servers, network sensors on a tap port, and a case management layer on top. I use it to run attacks safely, watch the telemetry they generate, and turn what I see into detections.
 
+## Diagram
+
+```mermaid
+flowchart TB
+    SW["TP-Link switch<br/>TAP / mirror port"]
+
+    subgraph VSPHERE["VMware vSphere: two ESXi hosts"]
+        DC["Domain Controller<br/>sheikhlabs.com<br/>Windows Server 2016<br/>AD DS, DNS"]
+        DHCP["DHCP server<br/>shdhcp.sheikhlabs.com<br/>Windows Server 2016"]
+        EP["4x Windows 11 endpoints<br/>Sysmon, Winlogbeat<br/>Wazuh and Elastic agents"]
+        subgraph SEC["Linux security servers: CentOS / Red Hat"]
+            SUR["Suricata<br/>IDS mode, ~30,000 rules<br/>eve.json"]
+            ZEEK["Zeek<br/>network security monitoring"]
+            WAZ["Wazuh<br/>host monitoring"]
+            ELA["Elastic Stack<br/>SIEM, Fleet server, Kibana"]
+            HIVE["TheHive<br/>cases and playbooks"]
+            CTX["Cortex<br/>observable analysis"]
+            OCTI["OpenCTI<br/>threat intelligence"]
+            VELO["Velociraptor<br/>endpoint hunting"]
+        end
+    end
+
+    VT["VirusTotal, AbuseIPDB<br/>and other intel feeds"]
+
+    SW -->|mirrored traffic| SUR
+    SW -->|mirrored traffic| ZEEK
+    SUR -->|Filebeat ships eve.json| ELA
+    ZEEK -->|network logs| ELA
+    EP -->|Winlogbeat: Windows and Sysmon logs| ELA
+    EP -->|agent telemetry| WAZ
+    EP -->|Elastic Agent, managed by Fleet| ELA
+    ELA -->|alerts and events become cases| HIVE
+    HIVE <-->|observables and results| CTX
+    CTX -->|API calls| VT
+    OCTI -.->|intel context| HIVE
+    VELO -->|hunting and artifact collection| EP
+```
+
+Everything in the diagram runs as virtual machines on the two ESXi hosts. Ansible is set up across the servers for configuration and repeatable builds.
+
 ## Virtualization
 
 Everything runs on two VMware ESXi hosts managed through vSphere.
