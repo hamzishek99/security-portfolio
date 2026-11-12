@@ -4,7 +4,7 @@ SOC analyst and detection engineer with 8 years in security operations, incident
 
 I spend most of my time on the defender side of Microsoft and Splunk environments. I triage and investigate incidents, build detection content from threat hunt findings, and tune alerts so the queue stays worth reading. I have written 50 custom Sentinel analytics from hunts and cut false positive volume by roughly 40 percent through threshold and entity tuning. I also run a home lab where I test attack paths and turn what I learn into detections.
 
-This repo is my public portfolio. Everything here is generalized or built in my lab. There are no employer details, no client names, and no data from real incidents.
+This repo is my public portfolio. Everything here is generalized or built in my lab.
 
 ## What is here
 
