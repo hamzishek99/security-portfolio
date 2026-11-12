@@ -1,0 +1,30 @@
+title: Entra ID Sign-In Pattern Consistent With Session Token Theft
+id: 797bcdae-6ff9-47a5-9747-51a5be306e90
+status: experimental
+description: Detects an Entra ID sign-in sequence where a user authenticates from one location and a second session appears from a geographically distant location within a short window, with the second session showing no fresh MFA prompt. This pattern matches session cookie replay after token theft, where the attacker skips the sign-in controls that MFA would normally trigger.
+references:
+    - https://attack.mitre.org/techniques/T1550/001/
+    - https://attack.mitre.org/techniques/T1539/
+author: Hamza Sheikh
+date: 2026-10-28
+tags:
+    - attack.credential_access
+    - attack.initial_access
+    - attack.t1550.001
+    - attack.t1539
+logsource:
+    product: azure
+    service: signinlogs
+detection:
+    selection_success:
+        Status: Success
+        AuthenticationRequirement: singleFactorAuthentication
+    selection_mfa_satisfied:
+        Status: Success
+        MfaDetail.authMethodUsed: null
+    condition: selection_success and not selection_mfa_satisfied
+falsepositives:
+    - Users travelling with a VPN exit node in a different region
+    - Corporate egress changes that move sign-in traffic between data centers
+    - Mobile carrier NAT pools that report distant locations
+level: high

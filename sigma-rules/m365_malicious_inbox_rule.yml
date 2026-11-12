@@ -1,0 +1,35 @@
+title: Microsoft 365 Malicious Inbox Rule Creation
+id: ff0a1e85-df68-4c82-af5b-1e6a6e714970
+status: experimental
+description: Detects creation of a mailbox inbox rule that forwards, redirects, or moves mail to a low visibility folder such as RSS Feeds, Junk Email, or a deleted items subfolder. Attackers create these rules after account compromise to hide replies and keep access to mail threads, often alongside rules that mark messages as read.
+references:
+    - https://attack.mitre.org/techniques/T1137/003/
+    - https://attack.mitre.org/techniques/T1114/003/
+author: Hamza Sheikh
+date: 2026-10-28
+tags:
+    - attack.persistence
+    - attack.collection
+    - attack.t1137.003
+    - attack.t1114.003
+logsource:
+    product: m365
+    service: exchange
+detection:
+    selection_operation:
+        Operation|contains:
+            - 'New-InboxRule'
+            - 'Set-InboxRule'
+    selection_action:
+        Parameters.Name|contains:
+            - 'ForwardTo'
+            - 'ForwardAsAttachmentTo'
+            - 'RedirectTo'
+            - 'MoveToFolder'
+            - 'MarkAsRead'
+    condition: selection_operation and selection_action
+falsepositives:
+    - Users setting up legitimate forwarding during leave coverage
+    - Admins creating transport style rules during mailbox migrations
+    - Shared mailbox triage rules created by support staff
+level: high

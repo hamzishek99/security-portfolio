@@ -1,0 +1,31 @@
+title: Active Directory Enumeration Consistent With BloodHound SharpHound Collection
+id: 27556b34-aff8-442c-b91e-f83619ee51f9
+status: experimental
+description: Detects a burst of directory enumeration behavior from a single workstation account, including high volume LDAP queries against the domain naming context and SAMR style account and group enumeration. SharpHound and similar collectors produce this pattern when they map users, groups, sessions, and ACLs in a short period.
+references:
+    - https://attack.mitre.org/techniques/T1087/002/
+    - https://attack.mitre.org/techniques/T1069/002/
+    - https://attack.mitre.org/techniques/T1018/
+author: Hamza Sheikh
+date: 2026-10-28
+tags:
+    - attack.discovery
+    - attack.t1087.002
+    - attack.t1069.002
+    - attack.t1018
+logsource:
+    product: windows
+    service: security
+detection:
+    selection_ldap:
+        EventID: 1644
+    selection_samr:
+        EventID: 4661
+        ObjectType: SAM_USER
+    timeframe: 5m
+    condition: selection_ldap or selection_samr
+falsepositives:
+    - Vulnerability scanners running authenticated directory checks
+    - Identity governance tools syncing group membership
+    - Admin scripts that enumerate group membership during onboarding runs
+level: medium
