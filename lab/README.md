@@ -40,8 +40,6 @@ flowchart TB
     VELO -->|hunting and artifact collection| EP
 ```
 
-Everything in the diagram runs as virtual machines on the two ESXi hosts. Ansible is set up across the servers for configuration and repeatable builds.
-
 ## Virtualization
 
 Everything runs on two VMware ESXi hosts managed through vSphere.
