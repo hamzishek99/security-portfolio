@@ -2,7 +2,7 @@
 
 Cybersecurity professional with 8 years of experience, specializing in incident response, threat hunting, and security engineering, from frontline triage to leading complex investigations. Based in Chicago, IL. I work remote.
 
-I spend most of my time on the defender side of Microsoft and Splunk environments. I triage and investigate incidents, build detection content from threat hunt findings, and tune alerts so the queue stays worth reading. I have written 50 custom Sentinel analytics from hunts and cut false positive volume by roughly 40 percent through threshold and entity tuning. I also run a home lab where I test attack paths and turn what I learn into detections.
+I spend most of my time on the defender side of Microsoft and Splunk environments. On the engineering side, I manage the security toolset itself: administering the Microsoft Sentinel workspace, managing Microsoft Defender endpoint policy, onboarding log sources, and keeping the detection stack healthy. I triage and investigate incidents, build detection content from threat hunt findings, and tune alerts so the queue stays worth reading. I have written 50 custom Sentinel analytics from hunts and cut false positive volume by roughly 40 percent through threshold and entity tuning. I also run a home lab where I test attack paths and turn what I learn into detections.
 
 This repo is my public portfolio. Everything here is generalized or built in my lab.
 
